@@ -6,14 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentSingleNoteBinding
+import com.example.myapplication.models.NoteModel
+import com.example.myapplication.viewmodels.AppViewModel
 
 class SingleNoteFragment : Fragment() {
     private lateinit var binding: FragmentSingleNoteBinding
     private var savedColor = "#64C8FD"
+    private var viewModel: AppViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -54,5 +59,11 @@ class SingleNoteFragment : Fragment() {
     }
 
     fun onAddNoteClick(view: View) {
+        val title = binding.titleEdtx.text.toString()
+        val note = binding.noteEdtx.text.toString()
+        val color = savedColor
+        val noteModel = NoteModel(title, note, color, false)
+        viewModel.insertNoteToDatabase(noteModel)
+        Navigation.findNavController(view).navigate(R.id.action_singleNoteFragment_to_homeFragment)
     }
 }

@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.adapters.PinnedAdapter
+import com.example.myapplication.adapters.UpcomingAdapter
 import com.example.myapplication.databinding.FragmentHomeBinding
 import com.example.myapplication.models.NoteModel
 import java.util.*
@@ -54,7 +55,7 @@ class HomeFragment : Fragment() {
         data.add(NoteModel("Note 2", "This is Note 2"))
         data.add(NoteModel("Note 3", "This is Note 3"))
 
-        binding.upcomingRv.adapter = PinnedAdapter(data)
+        binding.upcomingRv.adapter = UpcomingAdapter(data)
     }
 
 }
