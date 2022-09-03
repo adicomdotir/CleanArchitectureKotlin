@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.adapters.PinnedAdapter
 import com.example.myapplication.databinding.FragmentHomeBinding
@@ -20,8 +21,16 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater ,R.layout.fragment_home, container, false)
+        binding.addnoteFab.setOnClickListener {
+            fabOnClick(it)
+        }
         setupPinnedRecyclerView()
+        setupUpcomingRecyclerView()
         return binding.root
+    }
+
+    fun fabOnClick(view: View){
+        view.findNavController().navigate(R.id.action_homeFragment_to_singleNoteFragment)
     }
 
     private fun setupPinnedRecyclerView() {
@@ -37,6 +46,15 @@ class HomeFragment : Fragment() {
         }
 
         binding.pinnedRv.adapter = PinnedAdapter(data)
+    }
+
+    private fun setupUpcomingRecyclerView() {
+        val data = ArrayList<NoteModel>()
+        data.add(NoteModel("Note 1", "This is Note 1"))
+        data.add(NoteModel("Note 2", "This is Note 2"))
+        data.add(NoteModel("Note 3", "This is Note 3"))
+
+        binding.upcomingRv.adapter = PinnedAdapter(data)
     }
 
 }
