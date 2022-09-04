@@ -6,8 +6,10 @@
         <entry key="app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.2234375" />
         <entry key="app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.38" />
         <entry key="app/src/main/res/drawable/ic_user_24.xml" value="0.2234375" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.20729166666666668" />
+        <entry key="app/src/main/res/layout/fragment_list.xml" value="0.31929347826086957" />
+        <entry key="app/src/main/res/layout/fragment_note.xml" value="0.31929347826086957" />
         <entry key="app/src/main/res/layout/fragment_plan.xml" value="0.327445652173913" />
         <entry key="app/src/main/res/layout/fragment_single_note.xml" value="0.327445652173913" />
         <entry key="app/src/main/res/layout/pinned_item.xml" value="0.20729166666666668" />
@@ -18,7 +20,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

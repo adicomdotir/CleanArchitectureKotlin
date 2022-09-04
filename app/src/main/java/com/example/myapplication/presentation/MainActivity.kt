@@ -15,18 +15,5 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
-        setupNavigationComponent()
-    }
-
-    private fun setupNavigationComponent() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-
-        AppBarConfiguration.Builder(R.id.homeFragment, R.id.planFragment)
-            .setOpenableLayout(binding.drawerLayout)
-            .build()
-
-        binding.navView.setupWithNavController(navController)
     }
 }
