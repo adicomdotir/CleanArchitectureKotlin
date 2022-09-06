@@ -6,14 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentListBinding
 import com.example.myapplication.databinding.FragmentNoteBinding
+import com.example.myapplication.framework.ListViewModel
 
 
 class ListFragment : Fragment() {
     private lateinit var binding: FragmentListBinding
+    private val notesListAdapter = NotesListAdapter(arrayListOf())
+    private lateinit var viewModel: ListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,9 +31,27 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.notesListView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = notesListAdapter
+        }
+
         binding.addNote.setOnClickListener {
             goToNoteDetail()
         }
+
+        viewModel = ViewModelProvider(this).get(ListViewModel::class.java)
+
+        observeViewModel()
+    }
+
+    fun observeViewModel() {
+        viewModel.notes.observe(viewLifecycleOwner, Observer { notesList ->
+            binding.loadingView.visibility = View.GONE
+            binding.notesListView.visibility = View.VISIBLE
+            notesListAdapter.updateNotes(notesList)
+        })
     }
 
     private fun goToNoteDetail(id: Long = 0L) {
