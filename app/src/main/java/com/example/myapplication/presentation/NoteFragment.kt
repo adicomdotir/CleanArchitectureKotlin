@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -18,7 +19,8 @@ import com.example.myapplication.framework.NoteViewModel
 class NoteFragment : Fragment() {
     private lateinit var binding: FragmentNoteBinding
     private lateinit var viewModel: NoteViewModel
-    private val currentNote = Note("", "", 0L, 0L)
+    private var currentNote = Note("", "", 0L, 0L)
+    private var noteId = 0L
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +34,14 @@ class NoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
+
+        arguments?.let {
+            noteId = NoteFragmentArgs.fromBundle(it).noteId
+        }
+
+        if (noteId != 0L) {
+            viewModel.getNote(noteId)
+        }
 
         binding.checkButton.setOnClickListener {
             if (binding.titleView.text.isNotEmpty() || binding.contentView.text.isNotEmpty()) {
@@ -58,6 +68,14 @@ class NoteFragment : Fragment() {
                 Navigation.findNavController(binding.titleView).popBackStack()
             } else {
                 Toast.makeText(context, "Something went wrong, please try again", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        viewModel.currentNote.observe(viewLifecycleOwner, Observer { note ->
+            note?.let {
+                currentNote = it
+                binding.titleView.setText(it.title, TextView.BufferType.EDITABLE)
+                binding.contentView.setText(it.content, TextView.BufferType.EDITABLE)
             }
         })
     }

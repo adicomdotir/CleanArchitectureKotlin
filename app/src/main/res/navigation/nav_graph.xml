@@ -10,7 +10,7 @@
         android:label="fragment_list"
         tools:layout="@layout/fragment_list" >
         <action
-            android:id="@+id/action_listFragment_to_noteFragment"
+            android:id="@+id/actionGoToNote"
             app:destination="@id/noteFragment" />
     </fragment>
     <fragment
@@ -20,7 +20,6 @@
         tools:layout="@layout/fragment_note" >
         <argument
             android:name="noteId"
-            app:argType="long"
-            android:defaultValue="0L" />
+            app:argType="long" />
     </fragment>
 </navigation>

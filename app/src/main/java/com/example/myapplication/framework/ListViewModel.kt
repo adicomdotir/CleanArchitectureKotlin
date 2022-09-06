@@ -31,7 +31,7 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
     fun getNotes() {
         coroutineScope.launch {
             val noteList = useCases.getAllNotes()
-            notes.postValue(noteList)
+            notes.postValue(noteList.sortedByDescending { note -> note.updateTime })
         }
     }
 }

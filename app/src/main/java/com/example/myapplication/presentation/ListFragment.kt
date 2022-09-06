@@ -1,24 +1,24 @@
 package com.example.myapplication.presentation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentListBinding
-import com.example.myapplication.databinding.FragmentNoteBinding
 import com.example.myapplication.framework.ListViewModel
 
 
-class ListFragment : Fragment() {
+class ListFragment : Fragment(), ListAction {
     private lateinit var binding: FragmentListBinding
-    private val notesListAdapter = NotesListAdapter(arrayListOf())
+    private val notesListAdapter = NotesListAdapter(arrayListOf(), this)
     private lateinit var viewModel: ListViewModel
 
     override fun onCreateView(
@@ -46,7 +46,16 @@ class ListFragment : Fragment() {
         observeViewModel()
     }
 
-    fun observeViewModel() {
+    override fun onResume() {
+        super.onResume()
+        viewModel.getNotes()
+    }
+
+    override fun onClick(id: Long) {
+        goToNoteDetail(id)
+    }
+
+    private fun observeViewModel() {
         viewModel.notes.observe(viewLifecycleOwner, Observer { notesList ->
             binding.loadingView.visibility = View.GONE
             binding.notesListView.visibility = View.VISIBLE
@@ -55,6 +64,7 @@ class ListFragment : Fragment() {
     }
 
     private fun goToNoteDetail(id: Long = 0L) {
-        Navigation.findNavController(binding.notesListView).navigate(R.id.action_listFragment_to_noteFragment)
+        val action: NavDirections = ListFragmentDirections.actionGoToNote(id)
+        Navigation.findNavController(binding.notesListView).navigate(action)
     }
 }
