@@ -38,6 +38,7 @@ class NotesListAdapter(var notes: ArrayList<Note>, val action: ListAction): Recy
         private val noteTitle = binding.title
         private val noteContent = binding.content
         private val noteDate = binding.date
+        private val noteWords = binding.wordCount
 
         fun bind(note: Note) {
             noteTitle.text = note.title
@@ -50,6 +51,8 @@ class NotesListAdapter(var notes: ArrayList<Note>, val action: ListAction): Recy
             layout.setOnClickListener {
                 action.onClick(note.id)
             }
+
+            noteWords.text = "Words: ${note.wordCount}"
         }
     }
 }
